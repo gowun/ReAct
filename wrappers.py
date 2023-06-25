@@ -78,13 +78,14 @@ def f1_score(prediction, ground_truth):
   return f1, precision, recall
   
 class HotPotQAWrapper(gym.Wrapper):
-  def __init__(self, env, split):
+  def __init__(self, env, data_file): #split):
     super().__init__(env)
-    data_file = f"{DATA_DIR}/{HOTPOTQA_SPLIT_FILE[split]}"
+    #data_file = "gowun_data/hotpotqa_eng.json" #f"{DATA_DIR}/{HOTPOTQA_SPLIT_FILE[split]}"
+    self.data_file = data_file
     self.data = json.load(open(data_file))
     self.data = [(d['question'], d['answer']) for d in self.data]
     self.data_idx = 0
-    self.split = split
+    #self.split = split
 
   def reset(self, seed=None, return_info=False, options=None, idx=None):
     self.env.reset(seed=seed, return_info=return_info, options=options)
@@ -103,7 +104,7 @@ class HotPotQAWrapper(gym.Wrapper):
       "steps": self.steps, 
       "answer": self.answer,
       "question": self.data[self.data_idx][0], 
-      "hotpot_split": self.split
+      #"hotpot_split": self.split
     }
 
   def get_reward(self, info):
@@ -137,10 +138,11 @@ class HotPotQAWrapper(gym.Wrapper):
     return len(self.data)
 
 class FeverWrapper(gym.Wrapper):
-  def __init__(self, env, split):
+  def __init__(self, env, data_path): #split):
     super().__init__(env)
     
-    data_path = f"./data/{FEVER_SPLIT_FILE[split]}"
+    #data_path = "gowun_data/FEVER_eng.json" #f"./data/{FEVER_SPLIT_FILE[split]}"
+    self.data_path = data_path
     with open(data_path, "r") as json_file:
       json_list = list(json_file)
 
@@ -153,7 +155,7 @@ class FeverWrapper(gym.Wrapper):
 
     self.data = data
     self.data_idx = 0
-    self.split = split
+    #self.split = split
 
   def reset(self, seed=None, return_info=False, options=None, idx=None):
     self.env.reset(seed=seed, return_info=return_info, options=options)
@@ -172,7 +174,7 @@ class FeverWrapper(gym.Wrapper):
       "steps": self.steps, 
       "answer": self.answer,
       "question": self.data[self.data_idx][0], 
-      "fever_split": self.split
+      #"fever_split": self.split
     }
 
   def get_reward(self, info):
