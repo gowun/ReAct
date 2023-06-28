@@ -84,7 +84,7 @@ class WikiEnv(gym.Env):
     for p in paragraphs:
       sentences += p.split('. ')
     sentences = [s.strip() + '.' for s in sentences if s.strip()]
-    return ' '.join(sentences[:5])
+    return ' '.join(sentences)
 
     # ps = page.split("\n")
     # ret = ps[0]

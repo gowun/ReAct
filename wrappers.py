@@ -76,6 +76,7 @@ def f1_score(prediction, ground_truth):
   recall = 1.0 * num_same / len(ground_truth_tokens)
   f1 = (2 * precision * recall) / (precision + recall)
   return f1, precision, recall
+
   
 class HotPotQAWrapper(gym.Wrapper):
   def __init__(self, env, data_file): #split):
